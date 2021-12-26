@@ -3,6 +3,7 @@
 namespace Promotion\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use User\Http\Resources\User\ProfileDetailsResource;
 
 class PromotionCodeResource extends JsonResource
 {
@@ -21,6 +22,7 @@ class PromotionCodeResource extends JsonResource
             'end_date'=>$this->end_date,
             'amount'=>$this->amount,
             'quota'=>$this->quota,
+            'users'=>$this->when($this->assignee()->exists(),ProfileDetailsResource::collection($this->assignee))
         ];
     }
 }

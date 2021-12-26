@@ -4,11 +4,7 @@ namespace Promotion\Http\Controllers\Customer;
 
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Promotion\Http\Requests\Admin\AssignPromotionRequest;
-use Promotion\Http\Resources\PromotionCodeResource;
+use Promotion\Http\Requests\Customer\AssignPromotionRequest;
 use Promotion\Repository\PromotionCodeRepository;
 
 
@@ -32,22 +28,15 @@ class PromotionController extends Controller
      * @param AssignPromotionRequest $request
      * @return \Illuminate\Http\JsonResponse|object
      */
-    public function create(AssignPromotionRequest $request)
+    public function assign(AssignPromotionRequest $request)
     {
+        $promotion = $this->repository->findByField('code',$request->code)->first();
 
-        $promotion = $this->repository->findByField('code', $request->code);
-        DB::beginTransaction();
-        try {
-            if ($promotion->assignees()->count() >= $promotion->quota) {
-                return response()->json(["success" => false], 400)->setStatusCode(400);
-            }
-            $promotion->assignee()->attach(auth()->user()->id);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error(__CLASS__ . "@" . __METHOD__ . "=>" . $exception->getMessage());
+        if ($promotion->assignee()->where('user_id',auth()->user()->id)->exists() || $promotion->assignee()->count() >= $promotion->quota) {
+            return response()->json(["success" => false], 400)->setStatusCode(400);
         }
-
-
+        $promotion->assignee()->attach(auth()->user()->id);
+        auth()->user()->deposit($promotion->amount);
         return response()->json(["success" => true], 200)->setStatusCode(200);
     }
 }

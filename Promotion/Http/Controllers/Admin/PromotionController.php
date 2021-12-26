@@ -23,24 +23,24 @@ class PromotionController extends Controller
     {
         $this->repository = $repository;
     }
-//    /**
-//     * Get Promotion Codes
-//     * @group
-//     * BackOffice > Promotion
-//     */
-//    public function index()
-//    {
-//        return api()->success(trans('promotion.success'), PromotionCodeResource::collection($this->repository->all()));
-//    }
-//    /**
-//     * Get Promotion Code
-//     * @group
-//     * BackOffice > Promotion
-//     */
-//    public function show(PromotionCode $promotionCode)
-//    {
-//        return api()->success(trans('promotion.success'), PromotionCodeResource::make($promotionCode));
-//    }
+    /**
+     * Get Promotion Codes
+     * @group
+     * BackOffice > Promotion
+     */
+    public function index()
+    {
+        return response()->json(["success" => true,"data"=>PromotionCodeResource::collection($this->repository->all())], 200)->setStatusCode(200);
+    }
+    /**
+     * Get Promotion Code
+     * @group
+     * BackOffice > Promotion
+     */
+    public function show(PromotionCode $promotionCode)
+    {
+        return response()->json(["success" => true,"data"=>PromotionCodeResource::make($promotionCode)], 200)->setStatusCode(200);
+    }
 
 
     /**

@@ -1,16 +1,14 @@
 <?php
 
-namespace User;
+namespace Promotion;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use User\Models\User;
-use User\Observers\UserObserver;
 
-class UserServiceProvider extends ServiceProvider
+class PromotionServiceProvider extends ServiceProvider
 {
-    private $namespace = 'User\Http\Controllers';
+    private $namespace = 'Promotion\Http\Controllers';
 
     public function register()
     {
@@ -26,13 +24,13 @@ class UserServiceProvider extends ServiceProvider
         }
         $this->publishes([
             __DIR__ . '/database/migrations' => database_path('migrations'),
-        ], 'user-migrations');
+        ], 'promotion-migrations');
         $this->publishes([
             __DIR__ . '/database/seeders/' => database_path('seeders'),
-        ], 'user-seeds');
+        ], 'promotion-seeds');
         $this->publishes([
             __DIR__ . '/resources/lang' => resource_path('lang'),
-        ], 'user-resources');
+        ], 'promotion-resources');
     }
 
     public function boot()
@@ -47,16 +45,13 @@ class UserServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             if (isset($_SERVER['argv']))
                 if (array_search('db:seed', $_SERVER['argv']))
-                    Artisan::call('db:seed', ['--class' => "User\database\seeders\AuthTableSeeder"]);
+                    Artisan::call('db:seed', ['--class' => "Promotion\database\seeders\AuthTableSeeder"]);
 
         }
 
         if ($this->app->runningInConsole()) {
-            $this->seed();
+//            $this->seed();
         }
-
-
-        User::observe(UserObserver::class);
 
     }
 
@@ -81,14 +76,14 @@ class UserServiceProvider extends ServiceProvider
      */
     protected function shouldMigrate(): bool
     {
-        return UserConfigure::$runsMigrations;
+        return PromotionConfigure::$runsMigrations;
     }
 
     private function seed()
     {
         if (isset($_SERVER['argv']))
             if (array_search('db:seed', $_SERVER['argv'])) {
-                UserConfigure::seed();
+                PromotionConfigure::seed();
             }
     }
 

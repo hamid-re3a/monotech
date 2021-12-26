@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \User\UserServiceProvider::class,
+        \Promotion\PromotionServiceProvider::class,
 
         /*
          * Package Service Providers...

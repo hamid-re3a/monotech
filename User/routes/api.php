@@ -19,8 +19,6 @@ use User\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 Route::middleware('user_activity')->group(function () {
 
     Route::get('all_settings', [SettingController::class, 'index'])->name('all-settings');
-    Route::get('general/user/avatar/{member_id}/image', [GeneralController::class, 'getAvatarImage'])->name('avatar-image');
-    Route::get('general/user/avatar/{member_id}/file', [GeneralController::class, 'getAvatarFile'])->name('avatar-file');
 
     Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
     Route::middleware(['auth', 'block_user'])->group(function () {
@@ -35,7 +33,6 @@ Route::middleware('user_activity')->group(function () {
                         Route::post('', [AdminUserController::class, 'index'])->name('users-list');
                         Route::post('/user', [AdminUserController::class, 'getUser'])->name('user-data');
                         Route::patch('/', [AdminUserController::class, 'update'])->name('update');
-                        Route::post('/update_avatar', [AdminUserController::class, 'updateAvatar'])->name('update-avatar');
                         Route::patch('/reset_password', [AdminUserController::class, 'resetPassword'])->name('reset-password');
                         Route::post('/block_or_unblock_user', [AdminUserController::class, 'blockOrUnblockUser'])->name('block-or-unblock-user-account');
                         Route::post('/activate_or_deactivate_user', [AdminUserController::class, 'activateOrDeactivateUserAccount'])->name('activate-or-deactivate-user-account');
@@ -102,29 +99,15 @@ Route::middleware('user_activity')->group(function () {
                         Route::prefix('profile_management')->group(function () {
                             Route::get('', [UserController::class, 'getDetails'])->name('user-profile-detail');
                             Route::post('change_password', [UserController::class, 'changePassword'])->name('change-password');
-                            Route::post('change_transaction_password', [UserController::class, 'changeTransactionPassword'])->name('change-transaction-password');
-                            Route::post('transaction_password_otp', [UserController::class, 'askTransactionPasswordOtp'])->name('ask-transaction-password-otp');
-                            Route::post('verify_transaction_otp', [UserController::class, 'verifyTransactionPasswordOtp'])->name('verify-transaction-password-otp');
                             Route::post('update_personal_details', [UserController::class, 'updatePersonalDetails'])->name('update-personal-details');
-                            Route::post('update_contact_details', [UserController::class, 'updateContactDetails'])->name('update-contact-details');
-                            Route::post('update_avatar', [UserController::class, 'updateAvatar'])->name('update-avatar');
-                            Route::get('avatar', [UserController::class, 'getAvatarDetails'])->name('get-avatar-detail');
-                            Route::get('avatar/image', [UserController::class, 'getAvatarImage'])->name('get-avatar-image');
                         });
 
-
-                        Route::prefix('members')->name('members')->group(function () {
-                            Route::post('', [UserController::class, 'getSponsoredUserDetails'])->name('show_node');
-                        });
 
                         Route::prefix('activities')->name('activities.')->group(function () {
                             Route::get('/', [ActivityController::class, 'index'])->name('full-list');
                         });
 
                         Route::prefix('general')->name('general.')->group(function () {
-                            Route::get('countries', [GeneralController::class, 'countries'])->name('countries-list');
-                            Route::post('states', [GeneralController::class, 'states'])->name('states-list');
-                            Route::post('cities', [GeneralController::class, 'cities'])->name('cities-list');
                             Route::get('user/details/{member_id}', [GeneralController::class, 'getUserDetails'])->name('user-details');
                             Route::get('user/avatar/{member_id}', [GeneralController::class, 'getAvatarDetails'])->name('avatar-details');
                         });

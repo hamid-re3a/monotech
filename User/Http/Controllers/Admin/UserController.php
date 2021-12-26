@@ -275,29 +275,7 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Update user avatar
-     * @group
-     * Admin > User
-     * @param UpdateUserAvatarRequest $request
-     * @return JsonResponse
-     */
-    public function updateAvatar(UpdateUserAvatarRequest $request)
-    {
-        $user = User::whereMemberId($request->get('member_id'))->first();
-        $fileName = $user->id . '-' . $user->member_id . '-' . mt_rand(100,99999) . '-' . time() . '.' . $request->file('avatar')->getClientOriginalExtension();
-        $mimeType = $request->file('avatar')->getMimeType();
-        $path = $request->file('avatar')->storeAs('avatars', $fileName ,'s3');
-        $user->update([
-            'avatar' => [
-                'file_name' => $fileName,
-                'mime' => $mimeType,
-                'url' => Storage::disk('s3')->url($path)
-            ]
-        ]);
 
-        return api()->success();
-    }
 
     /**
      * Reset password

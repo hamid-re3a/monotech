@@ -1,0 +1,24 @@
+Example (Tests\Unit\Example)
+ [x] Example
+
+Example (Tests\Feature\Example)
+ [x] Example
+
+User (User\tests\Feature\User)
+ [x] Register new user green
+ [x] Register new user not enough strong password
+ [x] Login when user has not activate its account
+ [x] Login user green
+ [x] Login user block
+ [x] Login user block temporary scenario
+ [x] User forgot password green
+ [x] User forgot password failed
+ [x] User forgot password not valid reset
+ [x] User reset forget password green
+ [x] User reset forget password repetitious fail
+ [x] User reset forget password reset more than one time
+ [x] User email verify green
+ [x] User email verify failed
+ [x] Login user block failed
+ [x] Ask for email otp green
+

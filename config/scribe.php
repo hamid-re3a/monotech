@@ -222,7 +222,7 @@ return [
      */
     'intro_text' => <<<INTRO
 
-<h2> DCT documentation. </h2>
+<h2> Company Name documentation. </h2>
 *************************************************
 <h5> Author Info </h5>
 <ul> Name : Hamidreza Noruzinejad</ul>

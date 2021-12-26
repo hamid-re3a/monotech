@@ -17,7 +17,6 @@ Route::middleware('user_activity')->group(function () {
 
         Route::middleware(['email_verified'])->name('customer.')->group(function () {
             Route::post('assign-promotion',[PromotionController::class, 'assign'])->name('assign');
-
         });
     });
 });
